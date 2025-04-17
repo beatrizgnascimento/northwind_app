@@ -11,12 +11,12 @@ class DAOSeguro(DAOBase):
                     max_order_id = result[0] if result and result[0] is not None else 0
                     order_id = max_order_id + 1
 
-                    cur.execute("SELECT customerid FROM northwind.customers WHERE customername = %s", (customer_name,))
+                    cur.execute("SELECT customerid FROM northwind.customers WHERE contactname = %s", (customer_name,))
                     customer_result = cur.fetchone()
                     if not customer_result:
                         raise ValueError(f"Customer '{customer_name}' not found.")
                     customer_id = customer_result[0]
-                    cur.execute("SELECT employeeid FROM northwind.employees WHERE employeename = %s", (employee_name,))
+                    cur.execute("SELECT employeeid FROM northwind.employees WHERE firstname = %s", (employee_name,))
                     employee_result = cur.fetchone()
                     if not employee_result:
                         raise ValueError(f"Employee '{employee_name}' not found.")

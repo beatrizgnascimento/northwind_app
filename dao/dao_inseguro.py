@@ -12,12 +12,12 @@ class DAOInseguro(DAOBase):
                     order_id = max_order_id + 1
 
 
-                    cur.execute(f"SELECT customerid FROM northwind.customers WHERE customername = {customer_name}")
+                    cur.execute(f"SELECT customerid FROM northwind.customers WHERE contactname = {customer_name}")
                     customer_result = cur.fetchone()
                     if not customer_result:
                         raise ValueError(f"Customer '{customer_name}' not found.")
                     customer_id = customer_result[0]
-                    cur.execute(f"SELECT employeeid FROM northwind.employees WHERE employeename = {employee_name}")
+                    cur.execute(f"SELECT employeeid FROM northwind.employees WHERE firstname = {employee_name}")
                     employee_result = cur.fetchone()
                     if not employee_result:
                         raise ValueError(f"Employee '{employee_name}' not found.")

@@ -49,4 +49,6 @@ def abrir_formulario(controller):
     btn = tk.Button(janela, text="Gerar Relatório", command=relatorio)
     btn.grid(row=6, columnspan=2, pady=10)
 
+
+
     janela.mainloop()
