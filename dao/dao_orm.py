@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
 class DAOOrm(DAOBase):
-    def inserir_order(self, customer_name, employee_name, order_date, product_id, quantity):
+    def inserir_order(self, customer_name, employee_name, order_date):
         engine = self.get_engine
         Session = sessionmaker(bind=engine)
         session = Session()
@@ -25,8 +25,6 @@ class DAOOrm(DAOBase):
             order_id = (max_order_id.orderid if max_order_id else 0) + 1
             new_order = Orders(orderid=order_id, customerid=customer_id, employeeid=employee_id, orderdate=order_date)
             session.add(new_order)
-            new_order_detail = OrderDetails(orderid=order_id, productid=product_id, quantity=quantity)
-            session.add(new_order_detail)
             session.commit()
             return True
         except Exception as e:
@@ -36,7 +34,7 @@ class DAOOrm(DAOBase):
         finally:
             session.close()
 
-    def inserir_order_detail(self, product_id, quantity, unit_price, discount):
+    def inserir_order_detail(self, order_id, product_id, quantity, unit_price, discount):
         pass
 
     def relatorio_order(self, order_id):

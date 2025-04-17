@@ -2,7 +2,7 @@ from dao.dao_base import DAOBase
 import psycopg2 as psycopg
 
 class DAOSeguro(DAOBase):
-    def inserir_order(self,customer_name, employee_name, order_date, product_id, quantity):
+    def inserir_order(self,customer_name, employee_name, order_date):
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cur:
@@ -27,19 +27,25 @@ class DAOSeguro(DAOBase):
                         VALUES (%s, %s, %s, %s)
                     """, (order_id, customer_id, employee_id, order_date))
 
-                    cur.execute("""
-                        INSERT INTO northwind.order_details (orderid, productid, quantity)
-                        VALUES (%s, %s, %s)
-                    """, (order_id, product_id, quantity))
-
                     conn.commit()
                     return (True, "")
         except Exception as e:
             print(f"[SEGURO] Erro ao inserir pedido: {e}")
             return (False, e)
 
-    def inserir_order_detail(self, customer_id, employee_id, order_date, product_id, quantity):
-        pass
+    def inserir_order_detail(self, product_id, quantity, unit_price, discount):
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(f"""
+                        INSERT INTO northwind.order_details (productid, quantity, unit_price, discount)
+                        VALUES (%s, %s, %s, %s)
+                    """, (product_id, quantity, unit_price, discount))
+                    conn.commit()
+                    return (True, "")
+        except Exception as e:
+            print(f"[SEGURO] Erro ao inserir detalhes do pedido: {e}")
+            return (False, e)
 
     def relatorio_order(self, order_id):
         pass

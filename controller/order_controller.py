@@ -7,8 +7,6 @@ class Controller:
             customer_name=dados["customer_name"],
             employee_name=dados["employee_name"],
             order_date=dados["order_date"],
-            product_id=dados["product_id"],
-            quantity=dados["quantity"]
         )
     def gerar_relatorio_order(self, dados):
         return self.dao.gerar_relatorio_order(

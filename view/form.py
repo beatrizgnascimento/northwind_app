@@ -7,8 +7,6 @@ def abrir_formulario(controller):
             "customer_name": entry_cliente.get(),
             "employee_name": entry_vendedor.get(),
             "order_date": entry_data.get(),
-            "product_id": entry_produto.get(),
-            "quantity": entry_qtd.get()
         }
         sucesso, erro = controller.criar_pedido(dados)
         if sucesso:
