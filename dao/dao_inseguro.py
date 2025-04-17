@@ -41,7 +41,7 @@ class DAOInseguro(DAOBase):
             with self.get_connection() as conn:
                 with conn.cursor() as cur:
                     query_details = f"""
-                        INSERT INTO northwind.order_details (orderid, productid, quantity, unit_price, discount)
+                        INSERT INTO northwind.order_details (orderid, productid, quantity, unitprice, discount)
                         VALUES ({order_id}, {product_id}, {quantity}, {unit_price}, {discount})
                     """
                     print("[INSEGURO] Executando:\n", query_details)

@@ -38,7 +38,7 @@ class DAOSeguro(DAOBase):
             with self.get_connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(f"""
-                        INSERT INTO northwind.order_details (orderid, productid, quantity, unit_price, discount)
+                        INSERT INTO northwind.order_details (orderid, productid, quantity, unitprice, discount)
                         VALUES (%s, %s, %s, %s, %s)
                     """, (order_id,product_id, quantity, unit_price, discount))
                     conn.commit()
