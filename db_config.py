@@ -5,5 +5,5 @@ def get_connection():
         host="localhost",
         database="northwind",
         user="postgres",
-        password="Debouncing"
+        password="postgres"
     )
