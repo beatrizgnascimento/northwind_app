@@ -1,4 +1,3 @@
-from dao.order_dao import inserir_pedido_seguro, inserir_pedido_inseguro, inserir_pedido_orm
 class Controller:
     def __init__(self, dao):
         self.dao = dao
