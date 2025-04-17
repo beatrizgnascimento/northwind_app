@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 
 class DAOOrm(DAOBase):
     def inserir_order(self, customer_name, employee_name, order_date):
-        engine = self.get_engine
+        engine = self.get_engine()
         Session = sessionmaker(bind=engine)
         session = Session()
 
@@ -35,6 +35,23 @@ class DAOOrm(DAOBase):
             session.close()
 
     def inserir_order_detail(self, order_id, product_id, quantity, unit_price, discount):
+        engine = self.get_engine()
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        try:
+            order = session.query(Orders).filter(Orders.orderid == order_id).first()
+            if not order:
+                raise ValueError(f"Pedido com ID '{order_id}' não encontrado.")
+            new_order_detail = OrderDetails(orderid=order_id, productid=product_id, quantity=quantity, unitprice=unit_price, discount=discount)
+            session.add(new_order_detail)
+            session.commit()
+            return True
+        except Exception as e:
+            session.rollback()
+            print(f"[ORM] Erro ao inserir detalhe do pedido: {e}")
+            return False, e
+        finally:
+            session.close()
         pass
 
     def relatorio_order(self, order_id):
