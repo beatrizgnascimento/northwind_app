@@ -3,7 +3,7 @@ class Controller:
         self.dao = dao
 
     def criar_pedido(self, dados):
-        return self.dao.inserir_pedido(
+        return self.dao.inserir_order(
             customer_name=dados["customer_name"],
             employee_name=dados["employee_name"],
             order_date=dados["order_date"],
