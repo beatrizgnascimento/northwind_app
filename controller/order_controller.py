@@ -1,28 +1,22 @@
 from dao.order_dao import inserir_pedido_seguro, inserir_pedido_inseguro, inserir_pedido_orm
+class Controller:
+    def __init__(self, dao):
+        self.dao = dao
 
-def criar_pedido_seguro(dados):
-    return inserir_pedido_seguro(
-        customer_id=dados["customer_id"],
-        employee_id=dados["employee_id"],
-        order_date=dados["order_date"],
-        product_id=dados["product_id"],
-        quantity=dados["quantity"]
-    )
-
-def criar_pedido_inseguro(dados):
-    return inserir_pedido_inseguro(
-        customer_id=dados["customer_id"],
-        employee_id=dados["employee_id"],
-        order_date=dados["order_date"],
-        product_id=dados["product_id"],
-        quantity=dados["quantity"]
-    )
-
-def criar_pedido_orm(dados):
-    return inserir_pedido_orm(
-        customer_id=dados["customer_id"],
-        employee_id=dados["employee_id"],
-        order_date=dados["order_date"],
-        product_id=dados["product_id"],
-        quantity=dados["quantity"]
-    )
+    def criar_pedido(self, dados):
+        return self.dao.inserir_pedido(
+            customer_id=dados["customer_id"],
+            employee_id=dados["employee_id"],
+            order_date=dados["order_date"],
+            product_id=dados["product_id"],
+            quantity=dados["quantity"]
+        )
+    def gerar_relatorio_order(self, dados):
+        return self.dao.gerar_relatorio_order(
+            order_id=dados["order_id"]
+        )
+    def gerar_relatorio_employee(self, dados):
+        return self.dao.gerar_relatorio_employee(
+            date_start=dados["date_start"],
+            date_end=dados["date_end"]
+        )

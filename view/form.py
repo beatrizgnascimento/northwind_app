@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 
-def abrir_formulario(controller_funcao):
+def abrir_formulario(controller):
     def enviar():
         dados = {
             "customer_id": entry_cliente.get(),
@@ -10,11 +10,15 @@ def abrir_formulario(controller_funcao):
             "product_id": entry_produto.get(),
             "quantity": entry_qtd.get()
         }
-        sucesso, erro = controller_funcao(dados)
+        sucesso, erro = controller.criar_pedido(dados)
         if sucesso:
             messagebox.showinfo("Sucesso", "Pedido inserido com sucesso!")
         else:
             messagebox.showerror("Erro", "Falha ao inserir pedido:\n" + str(erro))
+    def relatorio():
+        relatorio_result = controller.relatorio()
+        tk.Label(janela, text=relatorio_result).grid(row=7, column=0,columnspan=2)
+        
 
     janela = tk.Tk()
     janela.title("Cadastro de Pedido")
@@ -41,5 +45,8 @@ def abrir_formulario(controller_funcao):
 
     btn = tk.Button(janela, text="Enviar Pedido", command=enviar)
     btn.grid(row=5, columnspan=2, pady=10)
+
+    btn = tk.Button(janela, text="Gerar Relatório", command=relatorio)
+    btn.grid(row=6, columnspan=2, pady=10)
 
     janela.mainloop()

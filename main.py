@@ -1,4 +1,8 @@
-from controller.order_controller import criar_pedido_seguro, criar_pedido_inseguro, criar_pedido_orm
+from controller.order_controller import Controller
+from dao.dao_seguro import DAOSeguro
+from dao.dao_inseguro import DAOInseguro
+from dao.dao_orm import DAOOrm
+from db_config import get_connection, get_engine
 from view.form import abrir_formulario
 
 
@@ -10,11 +14,11 @@ def main():
     opcao = input("Escolha uma opção: ")
 
     if opcao == '1':
-        abrir_formulario(criar_pedido_seguro)
+        abrir_formulario(Controller(DAOSeguro(get_connection,get_engine)))
     elif opcao == '2':
-        abrir_formulario(criar_pedido_inseguro)
+        abrir_formulario(Controller(DAOInseguro(get_connection,get_engine)))
     elif opcao == '3':
-        abrir_formulario(criar_pedido_orm)
+        abrir_formulario(Controller(DAOOrm(get_connection,get_engine)))
     else:
         print("Opção inválida.")
     
