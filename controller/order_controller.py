@@ -1,10 +1,7 @@
-from view.form import coletar_dados_pedido
-from dao.order_dao import inserir_pedido
+from dao.order_dao import inserir_pedido_seguro, inserir_pedido_inseguro
 
-def criar_pedido():
-    dados = coletar_dados_pedido()
-
-    sucesso = inserir_pedido(
+def criar_pedido_seguro(dados):
+    return inserir_pedido_seguro(
         customer_id=dados["customer_id"],
         employee_id=dados["employee_id"],
         order_date=dados["order_date"],
@@ -12,7 +9,11 @@ def criar_pedido():
         quantity=dados["quantity"]
     )
 
-    if sucesso:
-        print("\nPedido inserido com sucesso")
-    else:
-        print("\nFalha ao inserir pedido")
+def criar_pedido_inseguro(dados):
+    return inserir_pedido_inseguro(
+        customer_id=dados["customer_id"],
+        employee_id=dados["employee_id"],
+        order_date=dados["order_date"],
+        product_id=dados["product_id"],
+        quantity=dados["quantity"]
+    )
