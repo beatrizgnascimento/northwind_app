@@ -38,9 +38,11 @@ def abrir_formulario(controller):
         messagebox.showinfo("Relatório 1", resultado)
 
     def gerar_relatorio2():
-        inicio = entry_data_inicio.get()
-        fim = entry_data_fim.get()
-        resultado = controller.gerar_relatorio_employee(inicio, fim)
+        dados = {
+            "date_start": entry_data_inicio.get(),
+            "date_end": entry_data_fim.get(),
+        }
+        resultado = controller.gerar_relatorio_employee(dados)
         messagebox.showinfo("Relatório 2", resultado)
 
     janela = tk.Tk()

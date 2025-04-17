@@ -80,4 +80,26 @@ class DAOSeguro(DAOBase):
             return None
 
     def relatorio_employee(self, date_start, date_end):
-        pass
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    ret = ""
+                    cur.execute("""
+                        SELECT e.firstname, SUM(od.quantity * od.unitprice * (1 - od.discount)) AS total_sales
+                        FROM northwind.employees e
+                        JOIN northwind.orders o ON e.employeeid = o.employeeid
+                        JOIN northwind.order_details od ON o.orderid = od.orderid
+                        WHERE o.orderdate BETWEEN %s AND %s
+                        GROUP BY e.firstname
+                        ORDER BY total_sales DESC
+                    """, (date_start, date_end))
+                    result = cur.fetchall()
+                    i = 1
+                    for row in result:
+                        ret += f"#{i} Vendedor: {row[0]}, Total de Vendas: {row[1]}\n"
+                        i += 1
+                    return ret
+        except Exception as e:
+            print(f"[SEGURO] Erro ao gerar relatório de vendas por vendedor: {e}")
+            return None
+        
