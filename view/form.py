@@ -10,11 +10,11 @@ def abrir_formulario(controller_funcao):
             "product_id": entry_produto.get(),
             "quantity": entry_qtd.get()
         }
-        sucesso = controller_funcao(dados)
+        sucesso, erro = controller_funcao(dados)
         if sucesso:
             messagebox.showinfo("Sucesso", "Pedido inserido com sucesso!")
         else:
-            messagebox.showerror("Erro", "Falha ao inserir pedido.")
+            messagebox.showerror("Erro", "Falha ao inserir pedido:\n" + str(erro))
 
     janela = tk.Tk()
     janela.title("Cadastro de Pedido")

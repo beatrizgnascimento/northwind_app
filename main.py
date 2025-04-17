@@ -5,7 +5,7 @@ from view.form import abrir_formulario
 def main():
     print("1 - Inserir pedido (seguro)")
     print("2 - Inserir pedido (inseguro - simula SQL Injection)")
-    print("2 - Inserir pedido (ORM)")
+    print("3 - Inserir pedido (ORM)")
 
     opcao = input("Escolha uma opção: ")
 

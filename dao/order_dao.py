@@ -29,7 +29,7 @@ def inserir_pedido_seguro(customer_id, employee_id, order_date, product_id, quan
                 return True
     except Exception as e:
         print(f"[SEGURO] Erro ao inserir pedido: {e}")
-        return False
+        return False, e
 
 
 
@@ -62,7 +62,7 @@ def inserir_pedido_inseguro(customer_id, employee_id, order_date, product_id, qu
                 return True
     except Exception as e:
         print(f"[INSEGURO] Erro ao inserir pedido: {e}")
-        return False
+        return False, e
 
     
 def inserir_pedido_orm(customer_id, employee_id, order_date, product_id, quantity):
@@ -82,6 +82,6 @@ def inserir_pedido_orm(customer_id, employee_id, order_date, product_id, quantit
     except Exception as e:
         session.rollback()
         print(f"[ORM] Erro ao inserir pedido: {e}")
-        return False
+        return False, e
     finally:
         session.close()
