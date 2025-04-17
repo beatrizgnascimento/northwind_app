@@ -4,8 +4,8 @@ from tkinter import messagebox
 def abrir_formulario(controller):
     def enviar():
         dados = {
-            "customer_id": entry_cliente.get(),
-            "employee_id": entry_vendedor.get(),
+            "customer_name": entry_cliente.get(),
+            "employee_name": entry_vendedor.get(),
             "order_date": entry_data.get(),
             "product_id": entry_produto.get(),
             "quantity": entry_qtd.get()
@@ -23,11 +23,11 @@ def abrir_formulario(controller):
     janela = tk.Tk()
     janela.title("Cadastro de Pedido")
 
-    tk.Label(janela, text="ID Cliente").grid(row=0, column=0)
+    tk.Label(janela, text="Nome Cliente").grid(row=0, column=0)
     entry_cliente = tk.Entry(janela)
     entry_cliente.grid(row=0, column=1)
 
-    tk.Label(janela, text="ID Vendedor").grid(row=1, column=0)
+    tk.Label(janela, text="Nome Vendedor").grid(row=1, column=0)
     entry_vendedor = tk.Entry(janela)
     entry_vendedor.grid(row=1, column=1)
 

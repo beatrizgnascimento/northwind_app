@@ -4,8 +4,8 @@ class Controller:
 
     def criar_pedido(self, dados):
         return self.dao.inserir_pedido(
-            customer_id=dados["customer_id"],
-            employee_id=dados["employee_id"],
+            customer_name=dados["customer_name"],
+            employee_name=dados["employee_name"],
             order_date=dados["order_date"],
             product_id=dados["product_id"],
             quantity=dados["quantity"]
