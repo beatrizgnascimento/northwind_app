@@ -12,12 +12,12 @@ class DAOInseguro(DAOBase):
                     order_id = max_order_id + 1
 
 
-                    cur.execute(f"SELECT customerid FROM northwind.customers WHERE contactname = {customer_name}")
+                    cur.execute(f"SELECT customerid FROM northwind.customers WHERE contactname = {customer_name};")
                     customer_result = cur.fetchone()
                     if not customer_result:
                         raise ValueError(f"Customer '{customer_name}' not found.")
                     customer_id = customer_result[0]
-                    cur.execute(f"SELECT employeeid FROM northwind.employees WHERE firstname = {employee_name}")
+                    cur.execute(f"SELECT employeeid FROM northwind.employees WHERE firstname = {employee_name};")
                     employee_result = cur.fetchone()
                     if not employee_result:
                         raise ValueError(f"Employee '{employee_name}' not found.")
@@ -25,14 +25,14 @@ class DAOInseguro(DAOBase):
 
                     query_order = f"""
                         INSERT INTO northwind.orders (orderid, customerid, employeeid, orderdate)
-                        VALUES ({order_id}, '{customer_id}', {employee_id}, '{order_date}')
+                        VALUES ({order_id}, '{customer_id}', {employee_id}, '{order_date}');
                     """
                     print("[INSEGURO] Executando:\n", query_order)
                     cur.execute(query_order)
 
                     query_details = f"""
                         INSERT INTO northwind.order_details (orderid, productid, quantity)
-                        VALUES ({order_id}, {product_id}, {quantity})
+                        VALUES ({order_id}, {product_id}, {quantity});
                     """
                     cur.execute(query_details)
 
