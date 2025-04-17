@@ -33,10 +33,10 @@ class DAOSeguro(DAOBase):
                     """, (order_id, product_id, quantity))
 
                     conn.commit()
-                    return True
+                    return (True, "")
         except Exception as e:
             print(f"[SEGURO] Erro ao inserir pedido: {e}")
-            return False, e
+            return (False, e)
 
     def inserir_order_detail(self, customer_id, employee_id, order_date, product_id, quantity):
         pass
