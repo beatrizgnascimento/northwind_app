@@ -33,14 +33,14 @@ class DAOSeguro(DAOBase):
             print(f"[SEGURO] Erro ao inserir pedido: {e}")
             return (False, e)
 
-    def inserir_order_detail(self, product_id, quantity, unit_price, discount):
+    def inserir_order_detail(self, order_id, product_id, quantity, unit_price, discount):
         try:
             with self.get_connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(f"""
-                        INSERT INTO northwind.order_details (productid, quantity, unit_price, discount)
+                        INSERT INTO northwind.order_details (orderid, productid, quantity, unit_price, discount)
                         VALUES (%s, %s, %s, %s)
-                    """, (product_id, quantity, unit_price, discount))
+                    """, (order_id,product_id, quantity, unit_price, discount))
                     conn.commit()
                     return (True, "")
         except Exception as e:
