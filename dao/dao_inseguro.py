@@ -31,7 +31,7 @@ class DAOInseguro(DAOBase):
                     cur.execute(query_order)
 
                     conn.commit()
-                    return (True, "")
+                    return (True, str(order_id))
         except Exception as e:
             print(f"[INSEGURO] Erro ao inserir pedido: {e}")
             return (False, e)

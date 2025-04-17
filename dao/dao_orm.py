@@ -26,7 +26,7 @@ class DAOOrm(DAOBase):
             new_order = Orders(orderid=order_id, customerid=customer_id, employeeid=employee_id, orderdate=order_date)
             session.add(new_order)
             session.commit()
-            return (True, "")
+            return (True, str(order_id))
         except Exception as e:
             session.rollback()
             print(f"[ORM] Erro ao inserir pedido: {e}")
@@ -42,11 +42,11 @@ class DAOOrm(DAOBase):
             new_order_detail = OrderDetails(orderid=order_id, productid=product_id, quantity=quantity, unitprice=unit_price, discount=discount)
             session.add(new_order_detail)
             session.commit()
-            return True
+            return (True, "")
         except Exception as e:
             session.rollback()
             print(f"[ORM] Erro ao inserir detalhe do pedido: {e}")
-            return False, e
+            return (False, e)
         finally:
             session.close()
 
