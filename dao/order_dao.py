@@ -1,4 +1,10 @@
 import psycopg2 as psycopg
+from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey
+from sqlalchemy.orm import declarative_base, sessionmaker, relationship
+from model.models import Orders, OrderDetails
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
 
 def inserir_pedido_seguro(customer_id, employee_id, order_date, product_id, quantity):
     try:
@@ -58,3 +64,24 @@ def inserir_pedido_inseguro(customer_id, employee_id, order_date, product_id, qu
         print(f"[INSEGURO] Erro ao inserir pedido: {e}")
         return False
 
+    
+def inserir_pedido_orm(customer_id, employee_id, order_date, product_id, quantity):
+    engine = create_engine("postgresql+psycopg2://postgres:Debouncing@localhost/northwind")
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
+    try:
+        max_order_id = session.query(Orders).order_by(Orders.orderid.desc()).first()
+        order_id = (max_order_id.orderid if max_order_id else 0) + 1
+        new_order = Orders(orderid=order_id, customerid=customer_id, employeeid=employee_id, orderdate=order_date)
+        session.add(new_order)
+        new_order_detail = OrderDetails(orderid=order_id, productid=product_id, quantity=quantity)
+        session.add(new_order_detail)
+        session.commit()
+        return True
+    except Exception as e:
+        session.rollback()
+        print(f"[ORM] Erro ao inserir pedido: {e}")
+        return False
+    finally:
+        session.close()
