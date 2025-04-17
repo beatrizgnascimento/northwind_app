@@ -31,14 +31,16 @@ def abrir_formulario(controller):
             messagebox.showerror("Erro", "Erro ao inserir produto:\n" + str(msg))
 
     def gerar_relatorio1():
-        pedido_id = entry_id_pedido_rel1.get()
-        resultado = controller.relatorio1(pedido_id)
+        dados = {
+            "order_id": entry_id_pedido_rel1.get(),
+        }
+        resultado = controller.gerar_relatorio_order(dados)
         messagebox.showinfo("Relatório 1", resultado)
 
     def gerar_relatorio2():
         inicio = entry_data_inicio.get()
         fim = entry_data_fim.get()
-        resultado = controller.relatorio2(inicio, fim)
+        resultado = controller.gerar_relatorio_employee(inicio, fim)
         messagebox.showinfo("Relatório 2", resultado)
 
     janela = tk.Tk()

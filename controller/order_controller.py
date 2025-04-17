@@ -17,11 +17,11 @@ class Controller:
             discount=dados["discount"]
         )
     def gerar_relatorio_order(self, dados):
-        return self.dao.gerar_relatorio_order(
+        return self.dao.relatorio_order(
             order_id=dados["order_id"]
         )
     def gerar_relatorio_employee(self, dados):
-        return self.dao.gerar_relatorio_employee(
+        return self.dao.relatorio_employee(
             date_start=dados["date_start"],
             date_end=dados["date_end"]
         )

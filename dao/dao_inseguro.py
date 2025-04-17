@@ -53,7 +53,36 @@ class DAOInseguro(DAOBase):
             return (False, e)
 
     def relatorio_order(self, order_id):
-        pass
+        try:
+            with self.get_connection() as conn:
+                with conn.cursor() as cur:
+                    ret = ""
+                    cur.execute(f"""
+                        SELECT o.orderid, o.orderdate, c.contactname, e.firstname
+                        FROM northwind.orders o
+                        JOIN northwind.customers c ON o.customerid = c.customerid
+                        JOIN northwind.employees e ON o.employeeid = e.employeeid
+                        WHERE o.orderid = {order_id}
+                    """)
+                    result = cur.fetchall()
+                    ret = "ID do Pedido: " + str(result[0][0]) + "\n"
+                    ret += "Data do Pedido: " + str(result[0][1]) + "\n"
+                    ret += "Nome do Cliente: " + str(result[0][2]) + "\n"
+                    ret += "Nome do Vendedor: " + str(result[0][3]) + "\n"
+                    ret += "\n\nProdutos:\n"
+                    cur.execute(f"""
+                        SELECT p.productname, od.quantity, od.unitprice, od.discount
+                        FROM northwind.order_details od
+                        JOIN northwind.products p ON od.productid = p.productid
+                        WHERE od.orderid = {order_id}
+                    """)
+                    result = cur.fetchall()
+                    for row in result:
+                        ret += f"Produto: {row[0]}, Quantidade: {row[1]}, Preço Unitário: {row[2]}, Desconto: {row[3]}\n"
+                    return ret
+        except Exception as e:
+            print(f"[SEGURO] Erro ao gerar relatório do pedido: {e}")
+            return None
 
     def relatorio_employee(self, date_start, date_end):
         pass
