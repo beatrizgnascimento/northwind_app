@@ -39,9 +39,6 @@ class DAOOrm(DAOBase):
         Session = sessionmaker(bind=engine)
         session = Session()
         try:
-            order = session.query(Orders).filter(Orders.orderid == order_id).first()
-            if not order:
-                raise ValueError(f"Pedido com ID '{order_id}' não encontrado.")
             new_order_detail = OrderDetails(orderid=order_id, productid=product_id, quantity=quantity, unitprice=unit_price, discount=discount)
             session.add(new_order_detail)
             session.commit()
