@@ -8,6 +8,14 @@ class Controller:
             employee_name=dados["employee_name"],
             order_date=dados["order_date"],
         )
+    def inserir_produto(self, dados):
+        return self.dao.inserir_order_detail(
+            order_id=dados["order_id"],
+            product_id=dados["product_id"],
+            quantity=dados["quantity"],
+            unit_price=dados["unit_price"],
+            discount=dados["discount"]
+        )
     def gerar_relatorio_order(self, dados):
         return self.dao.gerar_relatorio_order(
             order_id=dados["order_id"]
