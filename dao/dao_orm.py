@@ -2,7 +2,7 @@ from dao.dao_base import DAOBase
 import psycopg2 as psycopg
 from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
-from model.models import Customers, Employees, Orders, OrderDetails, Employees
+from model.models import Customers, Employees, Orders, OrderDetails, Employees, Products
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine, func
 
@@ -59,8 +59,8 @@ class DAOOrm(DAOBase):
             order = session.query(Orders).filter(Orders.orderid == order_id).first()
             if not order:
                 raise ValueError(f"Pedido com ID '{order_id}' não encontrado.")
-            customer = session.query(Orders).filter(Orders.customerid == order.customerid).first()
-            employee = session.query(Orders).filter(Orders.employeeid == order.employeeid).first()
+            customer = session.query(Customers).filter(Customers.customerid == order.customerid).first()
+            employee = session.query(Employees).filter(Employees.employeeid == order.employeeid).first()
             order_details = session.query(OrderDetails).filter(OrderDetails.orderid == order_id).all()
             ret = f"ID do Pedido: {order.orderid}\n"
             ret += f"Data do Pedido: {order.orderdate}\n"
@@ -68,9 +68,9 @@ class DAOOrm(DAOBase):
             ret += f"Nome do Vendedor: {employee.firstname}\n"
             ret += "\n\nProdutos:\n"
             for detail in order_details:
-                product = session.query(Orders).filter(Orders.productid == detail.productid).first()
+                product = session.query(Products).filter(Products.productid == detail.productid).first()
                 ret += f"Produto: {product.productname}, Quantidade: {detail.quantity}, Preço Unitário: {detail.unitprice}, Desconto: {detail.discount}\n"
-
+            return ret
         except Exception as e:
             print(f"[ORM] Erro ao gerar relatório do pedido: {e}")
             return False, e
